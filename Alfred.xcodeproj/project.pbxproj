@@ -10,6 +10,19 @@
 		D95953611751755800AE14BF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D95953601751755800AE14BF /* Cocoa.framework */; };
 		D959536B1751755800AE14BF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D95953691751755800AE14BF /* InfoPlist.strings */; };
 		D959536F1751755800AE14BF /* Alfred.m in Sources */ = {isa = PBXBuildFile; fileRef = D959536E1751755800AE14BF /* Alfred.m */; };
+		D95953811751756B00AE14BF /* AWFeedbackItem.h in Headers */ = {isa = PBXBuildFile; fileRef = D95953751751756B00AE14BF /* AWFeedbackItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D95953821751756B00AE14BF /* AWFeedbackItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D95953761751756B00AE14BF /* AWFeedbackItem.m */; };
+		D95953831751756B00AE14BF /* AWPreferences.h in Headers */ = {isa = PBXBuildFile; fileRef = D95953771751756B00AE14BF /* AWPreferences.h */; };
+		D95953841751756B00AE14BF /* AWPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = D95953781751756B00AE14BF /* AWPreferences.m */; };
+		D95953851751756B00AE14BF /* AWWorkflow.h in Headers */ = {isa = PBXBuildFile; fileRef = D95953791751756B00AE14BF /* AWWorkflow.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D95953861751756B00AE14BF /* AWWorkflow.m in Sources */ = {isa = PBXBuildFile; fileRef = D959537A1751756B00AE14BF /* AWWorkflow.m */; };
+		D95953871751756B00AE14BF /* NSArray+FuzzySearching.h in Headers */ = {isa = PBXBuildFile; fileRef = D959537B1751756B00AE14BF /* NSArray+FuzzySearching.h */; };
+		D95953881751756B00AE14BF /* NSArray+FuzzySearching.m in Sources */ = {isa = PBXBuildFile; fileRef = D959537C1751756B00AE14BF /* NSArray+FuzzySearching.m */; };
+		D95953891751756B00AE14BF /* NSFileManager+AWFindOrCreate.h in Headers */ = {isa = PBXBuildFile; fileRef = D959537D1751756B00AE14BF /* NSFileManager+AWFindOrCreate.h */; };
+		D959538A1751756B00AE14BF /* NSFileManager+AWFindOrCreate.m in Sources */ = {isa = PBXBuildFile; fileRef = D959537E1751756B00AE14BF /* NSFileManager+AWFindOrCreate.m */; };
+		D959538B1751756B00AE14BF /* NSString+XMLEscaping.h in Headers */ = {isa = PBXBuildFile; fileRef = D959537F1751756B00AE14BF /* NSString+XMLEscaping.h */; };
+		D959538C1751756B00AE14BF /* NSString+XMLEscaping.m in Sources */ = {isa = PBXBuildFile; fileRef = D95953801751756B00AE14BF /* NSString+XMLEscaping.m */; };
+		D959538F175178C900AE14BF /* Alfred.h in Headers */ = {isa = PBXBuildFile; fileRef = D959536D1751755800AE14BF /* Alfred.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,8 +34,20 @@
 		D95953681751755800AE14BF /* Alfred-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Alfred-Info.plist"; sourceTree = "<group>"; };
 		D959536A1751755800AE14BF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D959536C1751755800AE14BF /* Alfred-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Alfred-Prefix.pch"; sourceTree = "<group>"; };
-		D959536D1751755800AE14BF /* Alfred.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Alfred.h; sourceTree = "<group>"; };
-		D959536E1751755800AE14BF /* Alfred.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Alfred.m; sourceTree = "<group>"; };
+		D959536D1751755800AE14BF /* Alfred.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Alfred.h; path = Alfred/Alfred.h; sourceTree = "<group>"; };
+		D959536E1751755800AE14BF /* Alfred.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Alfred.m; path = Alfred/Alfred.m; sourceTree = "<group>"; };
+		D95953751751756B00AE14BF /* AWFeedbackItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWFeedbackItem.h; sourceTree = "<group>"; };
+		D95953761751756B00AE14BF /* AWFeedbackItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWFeedbackItem.m; sourceTree = "<group>"; };
+		D95953771751756B00AE14BF /* AWPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWPreferences.h; sourceTree = "<group>"; };
+		D95953781751756B00AE14BF /* AWPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWPreferences.m; sourceTree = "<group>"; };
+		D95953791751756B00AE14BF /* AWWorkflow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWWorkflow.h; sourceTree = "<group>"; };
+		D959537A1751756B00AE14BF /* AWWorkflow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWWorkflow.m; sourceTree = "<group>"; };
+		D959537B1751756B00AE14BF /* NSArray+FuzzySearching.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+FuzzySearching.h"; sourceTree = "<group>"; };
+		D959537C1751756B00AE14BF /* NSArray+FuzzySearching.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+FuzzySearching.m"; sourceTree = "<group>"; };
+		D959537D1751756B00AE14BF /* NSFileManager+AWFindOrCreate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+AWFindOrCreate.h"; sourceTree = "<group>"; };
+		D959537E1751756B00AE14BF /* NSFileManager+AWFindOrCreate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+AWFindOrCreate.m"; sourceTree = "<group>"; };
+		D959537F1751756B00AE14BF /* NSString+XMLEscaping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+XMLEscaping.h"; sourceTree = "<group>"; };
+		D95953801751756B00AE14BF /* NSString+XMLEscaping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+XMLEscaping.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,8 +101,8 @@
 		D95953661751755800AE14BF /* Alfred */ = {
 			isa = PBXGroup;
 			children = (
-				D959536D1751755800AE14BF /* Alfred.h */,
-				D959536E1751755800AE14BF /* Alfred.m */,
+				D959538D1751757200AE14BF /* Private */,
+				D959538E1751758200AE14BF /* Public */,
 				D95953671751755800AE14BF /* Supporting Files */,
 			);
 			path = Alfred;
@@ -93,6 +118,36 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		D959538D1751757200AE14BF /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				D95953761751756B00AE14BF /* AWFeedbackItem.m */,
+				D95953781751756B00AE14BF /* AWPreferences.m */,
+				D959537A1751756B00AE14BF /* AWWorkflow.m */,
+				D959537C1751756B00AE14BF /* NSArray+FuzzySearching.m */,
+				D959537E1751756B00AE14BF /* NSFileManager+AWFindOrCreate.m */,
+				D95953801751756B00AE14BF /* NSString+XMLEscaping.m */,
+				D95953771751756B00AE14BF /* AWPreferences.h */,
+				D959537B1751756B00AE14BF /* NSArray+FuzzySearching.h */,
+				D959537D1751756B00AE14BF /* NSFileManager+AWFindOrCreate.h */,
+				D959537F1751756B00AE14BF /* NSString+XMLEscaping.h */,
+				D959536E1751755800AE14BF /* Alfred.m */,
+			);
+			name = Private;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		D959538E1751758200AE14BF /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				D959536D1751755800AE14BF /* Alfred.h */,
+				D95953751751756B00AE14BF /* AWFeedbackItem.h */,
+				D95953791751756B00AE14BF /* AWWorkflow.h */,
+			);
+			name = Public;
+			path = ..;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -100,6 +155,13 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D95953811751756B00AE14BF /* AWFeedbackItem.h in Headers */,
+				D959538F175178C900AE14BF /* Alfred.h in Headers */,
+				D95953851751756B00AE14BF /* AWWorkflow.h in Headers */,
+				D95953831751756B00AE14BF /* AWPreferences.h in Headers */,
+				D95953871751756B00AE14BF /* NSArray+FuzzySearching.h in Headers */,
+				D95953891751756B00AE14BF /* NSFileManager+AWFindOrCreate.h in Headers */,
+				D959538B1751756B00AE14BF /* NSString+XMLEscaping.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,6 +229,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				D959536F1751755800AE14BF /* Alfred.m in Sources */,
+				D95953821751756B00AE14BF /* AWFeedbackItem.m in Sources */,
+				D95953841751756B00AE14BF /* AWPreferences.m in Sources */,
+				D95953861751756B00AE14BF /* AWWorkflow.m in Sources */,
+				D95953881751756B00AE14BF /* NSArray+FuzzySearching.m in Sources */,
+				D959538A1751756B00AE14BF /* NSFileManager+AWFindOrCreate.m in Sources */,
+				D959538C1751756B00AE14BF /* NSString+XMLEscaping.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +321,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Alfred/Alfred-Prefix.pch";
 				INFOPLIST_FILE = "Alfred/Alfred-Info.plist";
+				INSTALL_PATH = "@rpath";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -268,6 +337,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Alfred/Alfred-Prefix.pch";
 				INFOPLIST_FILE = "Alfred/Alfred-Info.plist";
+				INSTALL_PATH = "@rpath";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
