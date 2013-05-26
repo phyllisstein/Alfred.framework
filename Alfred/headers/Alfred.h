@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <Alfred/AWFeedbackItem.h>
 #import <Alfred/AWWorkflow.h>
+#import <Alfred/AWArgs.h>
 
 @interface Alfred : NSObject
 

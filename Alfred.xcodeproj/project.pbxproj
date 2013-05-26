@@ -25,6 +25,8 @@
 		D9F82DA31751DAEA00A0042B /* NSString+XMLEscaping.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F82D9C1751DAEA00A0042B /* NSString+XMLEscaping.m */; };
 		D9F82DA91751DF6100A0042B /* LICENSE.mdown in Resources */ = {isa = PBXBuildFile; fileRef = D9F82DA71751DF6100A0042B /* LICENSE.mdown */; };
 		D9F82DAA1751DF6100A0042B /* README.mdown in Resources */ = {isa = PBXBuildFile; fileRef = D9F82DA81751DF6100A0042B /* README.mdown */; };
+		D9F82DB01751E3DF00A0042B /* AWArgs.h in Headers */ = {isa = PBXBuildFile; fileRef = D9F82DAF1751E3DF00A0042B /* AWArgs.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		D9F82DB21751E3E600A0042B /* AWArgs.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F82DB11751E3E600A0042B /* AWArgs.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +54,8 @@
 		D9F82D9C1751DAEA00A0042B /* NSString+XMLEscaping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+XMLEscaping.m"; path = "implementation/NSString+XMLEscaping.m"; sourceTree = "<group>"; };
 		D9F82DA71751DF6100A0042B /* LICENSE.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.mdown; sourceTree = "<group>"; };
 		D9F82DA81751DF6100A0042B /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.mdown; sourceTree = "<group>"; };
+		D9F82DAF1751E3DF00A0042B /* AWArgs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AWArgs.h; path = headers/AWArgs.h; sourceTree = "<group>"; };
+		D9F82DB11751E3E600A0042B /* AWArgs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AWArgs.m; path = implementation/AWArgs.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +131,7 @@
 		D9F82D951751DAC800A0042B /* headers */ = {
 			isa = PBXGroup;
 			children = (
+				D9F82DAF1751E3DF00A0042B /* AWArgs.h */,
 				D9F82D871751DAB100A0042B /* Alfred.h */,
 				D9F82D881751DAB100A0042B /* AWFeedbackItem.h */,
 				D9F82D891751DAB100A0042B /* AWPreferences.h */,
@@ -141,6 +146,7 @@
 		D9F82DA41751DAF100A0042B /* implementation */ = {
 			isa = PBXGroup;
 			children = (
+				D9F82DB11751E3E600A0042B /* AWArgs.m */,
 				D9F82D961751DAEA00A0042B /* Alfred.m */,
 				D9F82D971751DAEA00A0042B /* AWFeedbackItem.m */,
 				D9F82D981751DAEA00A0042B /* AWPreferences.m */,
@@ -162,6 +168,7 @@
 				D9F82D8E1751DAB100A0042B /* Alfred.h in Headers */,
 				D9F82D8F1751DAB100A0042B /* AWFeedbackItem.h in Headers */,
 				D9F82D911751DAB100A0042B /* AWWorkflow.h in Headers */,
+				D9F82DB01751E3DF00A0042B /* AWArgs.h in Headers */,
 				D9F82D901751DAB100A0042B /* AWPreferences.h in Headers */,
 				D9F82D921751DAB100A0042B /* NSArray+FuzzySearching.h in Headers */,
 				D9F82D931751DAB100A0042B /* NSFileManager+AWFindOrCreate.h in Headers */,
@@ -241,6 +248,7 @@
 				D9F82DA11751DAEA00A0042B /* NSArray+FuzzySearching.m in Sources */,
 				D9F82DA21751DAEA00A0042B /* NSFileManager+AWFindOrCreate.m in Sources */,
 				D9F82DA31751DAEA00A0042B /* NSString+XMLEscaping.m in Sources */,
+				D9F82DB21751E3E600A0042B /* AWArgs.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,7 +336,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Alfred/Alfred-Prefix.pch";
 				INFOPLIST_FILE = "Alfred/Alfred-Info.plist";
-				INSTALL_PATH = "@rpath";
+				INSTALL_PATH = ./;
 				MACH_O_TYPE = mh_dylib;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -347,7 +355,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Alfred/Alfred-Prefix.pch";
 				INFOPLIST_FILE = "Alfred/Alfred-Info.plist";
-				INSTALL_PATH = "@rpath";
+				INSTALL_PATH = ./;
 				MACH_O_TYPE = mh_dylib;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";

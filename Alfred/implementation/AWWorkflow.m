@@ -11,10 +11,11 @@
 #import "AWFeedbackItem.h"
 #import "NSArray+FuzzySearching.h"
 #import "AWPreferences.h"
+#import "AWArgs.h"
 
 @interface AWWorkflow () <AWFuzzySearchingDelegate>
 
-@property (readwrite) AWPreferences *prefs_;
+@property (readwrite) NSString *bid;
 
 @end
 
@@ -27,7 +28,7 @@
 {
     self = [super init];
     if (self != nil) {
-        _prefs_ = [[AWPreferences alloc] init];
+        _bid = [self bundleID];
     }
 
     return self;
@@ -43,7 +44,7 @@
     NSString *msg = [[NSString alloc] initWithFormat:[s stringByAppendingString:@"\n"] arguments:args];
     va_end(args);
 
-    NSString *logloc = [self local:[NSString stringWithFormat:@"%@.log", [self bundleID]]];
+    NSString *logloc = [self local:@"framework.log"];
     if (![[NSFileManager defaultManager] fileExistsAtPath:logloc]) {
         [[NSFileManager defaultManager] createFileAtPath:logloc
                                                 contents:[msg dataUsingEncoding:NSUTF8StringEncoding]
@@ -192,14 +193,23 @@
 
 
 
+# pragma mark -
+# pragma mark Argument parser
+
+- (AWArgs *)parseArguments:(const char *[])argv withKeys:(NSArray *)keys count:(int)argc
+{
+    return [[AWArgs alloc] initWithArgs:argv andKeys:keys count:argc];
+}
+
+
+
+
+
+
+
 
 # pragma mark -
 # pragma mark Preferences
-
-- (void)setPreference:(id)value forKey:(NSString *)key
-{
-    
-}
 
 
 

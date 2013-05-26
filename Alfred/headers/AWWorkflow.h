@@ -10,7 +10,7 @@
 
 @interface AWWorkflow : NSObject
 
-@property NSString *bid;
+@property (readonly) NSString *bid;
 
 - (NSString *)bundleID;
 - (NSString *)local;
@@ -27,7 +27,6 @@
 
 - (NSArray *)fuzzySearchFor:(NSString *)query in:(NSArray *)array withKeyBlock:(NSString *(^)(id))key;
 
-- (void)setPreference:(id)value forKey:(NSString *)key;
-- (id)preferenceForKey:(NSString *)key;
+- (id)parseArguments:(const char *[])argv withKeys:(NSArray *)keys count:(int)argc;
 
 @end
