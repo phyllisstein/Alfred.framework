@@ -7,7 +7,7 @@ Alfred.framework is a lightweight Objective-C framework for developing workflow 
 * An argument parser.
 * Silent error logging.
 
-You can [download the latest version here][latest]; for more information about this and prior releases, [see the changelog][cl]. You can also browse and download the source code [at Github]
+You can [download the latest version here][latest]; for more information about this and prior releases, [see the changelog][cl]. You can also browse and download the source code [at Github](https://github.com/phyllisstein/Alfred.framework).
 
 
 ## Installation
@@ -280,11 +280,11 @@ The framework also defines a number of methods for quickly accessing files in th
 
 * `- local`  
     Without an argument, `[wf local]` returns the path to the folder containing your executable.
-* `- local:`  
+* `- local:(NSString *)`  
     With an optional `NSString` argument, `[wf local:@"baz.png"]` returns the argument appended as a path component to the folder containing your executable.
-* `- cache` and `- cache:`  
+* `- cache` and `- cache:(NSString *)`  
     Returns the path to your workflow's cache folder, optionally with an additional path component appended. If the cache folder does not already exist, the framework will create it; however, the file or folder referenced by `- cache:` _will not_ be created automatically.
-* `- storage` and `- storage:`  
+* `- storage` and `- storage:(NSString *)`  
     Returns the path to your workflow's storage folder, optionally with an additional path component appended. If the storage folder does not already exist, the framework will create it; however, the file or folder referenced by `- storage:` _will not_ be created.
 
 

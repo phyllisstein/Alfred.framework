@@ -25,7 +25,7 @@
     id arg = o;
     do {
         if (i % 2 == 0) {
-            [v addObject:[NSString stringWithString:arg]];
+            [v addObject:arg];
         } else if (i % 2 != 0) {
             if ([[arg className] rangeOfString:@"String"].location != NSNotFound)
                 [k addObject:arg];
