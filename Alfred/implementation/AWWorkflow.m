@@ -196,9 +196,10 @@
 # pragma mark -
 # pragma mark Argument parser
 
-- (AWArgs *)parseArguments:(const char *[])argv withKeys:(NSArray *)keys count:(int)argc
+- (NSDictionary *)parseArguments:(const char *[])argv withKeys:(NSArray *)keys count:(int)argc
 {
-    return [[AWArgs alloc] initWithArgs:argv andKeys:keys count:argc];
+    AWArgs *awa = [[AWArgs alloc] initWithArgs:argv andKeys:keys count:argc];
+    return [awa parse];
 }
 
 

@@ -21,7 +21,7 @@
 
 @implementation AWArgs
 
-- (id)initWithArgs:(const char *[])argv andKeys:(NSArray *)keys count:(int)argc
+- (id)initWithArgs:(const char *[])argv andKeys:(NSArray *)keys count:(int)argc 
 {
     self = [super init];
     if (self != nil) {
@@ -46,21 +46,25 @@
     for (int i = 0; i < [self.keys count]; i++) {
         NSDictionary *kv = [self.keys objectAtIndex:i];
         NSString *name = [kv objectForKey:@"name"];
-        [fmt appendString:name];
         const char *n = [name UTF8String];
         NSNumber *has_arg = [kv objectForKey:@"has_arg"];
         int h_a;
-        if ([has_arg isEqualToNumber:@YES])
+        NSString *fl = [kv objectForKey:@"flag"];
+        unichar flag = [fl characterAtIndex:0];
+        if ([has_arg isEqualToNumber:@YES]) {
             h_a = required_argument;
-        else if ([has_arg isEqualToNumber:@NO])
+            [fmt appendFormat:@"%@:", fl];
+        } else if ([has_arg isEqualToNumber:@NO]) {
             h_a = no_argument;
-        else
+            [fmt appendString:fl];
+        } else {
             h_a = optional_argument;
-        unichar flag = [[kv objectForKey:@"flag"] characterAtIndex:0];
+            [fmt appendFormat:@"%@::", fl];
+        }
 
         long_options[i].name = n;
         long_options[i].has_arg = h_a;
-        long_options[i].flag = 0;
+        long_options[i].flag = NULL;
         long_options[i].val = flag;
     }
     int last = o - 1;
@@ -76,20 +80,9 @@
 
         if (c == -1) {
             break;
-        }
-        NSString *k = nil;
-        id v = nil;
-        if (c == 0) {
-            k = [NSString stringWithCString:long_options[option_index].name encoding:NSUTF8StringEncoding];
-            if (optarg) {
-                v = [NSString stringWithCString:optarg encoding:NSUTF8StringEncoding];
-            } else {
-                v = @YES;
-            }
-            [d setObject:v forKey:k];
         } else {
-            const char _c = (const char)c;
-            k = [NSString stringWithCString:&_c encoding:NSUTF8StringEncoding];
+            NSString *k = [NSString stringWithCString:long_options[option_index].name encoding:NSUTF8StringEncoding];
+            id v = nil;
             if (optarg) {
                 v = [NSString stringWithCString:optarg encoding:NSUTF8StringEncoding];
             } else {
@@ -99,14 +92,21 @@
         }
     }
 
-    int oi = option_index + 2; // Advance from the last argument (+1) and ignore argv[0] (+1)
+    int _i = 1;
+    for (int i = 1; i < self.argc; i++) {
+        NSString *arg = [NSString stringWithCString:self.argv[i] encoding:NSUTF8StringEncoding];
+        if ([arg rangeOfString:@"--"].location == NSNotFound) {
+            _i = i; // First non-option argument.
+            break;
+        }
+    }
     NSMutableString *q = [[NSMutableString alloc] initWithCapacity:0];
-    for (int i = oi; i < self.argc; i++) {
-        [q appendFormat:@"%@ ", [NSString stringWithCString:self.argv[i] encoding:NSUTF8StringEncoding]];
+    for (int j = _i; j < self.argc; j++) {
+        NSString *s = [NSString stringWithCString:self.argv[j] encoding:NSUTF8StringEncoding];
+        [q appendFormat:@"%@ ", s];
     }
     q = [NSMutableString stringWithString:[q stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
-    NSLog(@"q=%@, option_index=%i, self.argv=%s", q, option_index, *self.argv);
-    [d setObject:q forKey:@"query"];
+    [d setObject:q forKey:@"{query}"];
 
     return d;
 }

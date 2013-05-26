@@ -27,6 +27,6 @@
 
 - (NSArray *)fuzzySearchFor:(NSString *)query in:(NSArray *)array withKeyBlock:(NSString *(^)(id))key;
 
-- (id)parseArguments:(const char *[])argv withKeys:(NSArray *)keys count:(int)argc;
+- (NSDictionary *)parseArguments:(const char *[])argv withKeys:(NSArray *)keys count:(int)argc;
 
 @end
