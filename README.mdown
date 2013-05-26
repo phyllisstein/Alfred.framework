@@ -1,7 +1,3 @@
-% Alfred.framework
-% Daniel Shannon
-% 2013-05-25
-
 # Alfred.framework for Objective-C
 Alfred.framework is a lightweight Objective-C framework for developing workflow components for [Alfred v2][alfred]. Modeled in part on [alp][], Alfred.framework is designed to automate a number of repetitive and annoying workflow tasks with the goal of making it faster and easier to generate fewer lines of code. The library is still in its developmental infancy, but current features include:
 
@@ -16,7 +12,7 @@ You can [download the latest version here][latest]; for more information about t
 ## Installation
 Adding Alfred.framework to XCode is more of a chore than is ideal but less of a chore than you might fear. To get started, [download the latest version][latest] and extract the contents of the zip. Then, in XCode, click the plus sign in the lower-left-hand corner of the window, select 'Add Files to "MyAlfredWorkflow"...,' and navigate to the folder where you saved Alfred.framework. Ensure that "Copy items to the destination group's folder" and "MyAlfredWorkflow" (under "Add to targets") are checked, then select Alfred.framework and click "Add."
 
-![](setup-1.png)
+![](http://alfred.daniel.sh/framework/setup-1.png)
 
 Now select the main project item from the pane to the left, then choose the target "MyAlfredWorkflow." Under "Build Phases," click the disclosure triangle next to "Link binary with libraries" and make sure it includes Alfred.framework. If not, click the plus sign, then "Add Other...," then navigate to the file on your hard drive and add it manually.
 
@@ -42,7 +38,7 @@ int main(int argc, const char * argv[])
 
 If you've done everything correctly so far, XCode should try to autocomplete `<Alfred/Alfred.h>` as you type, and your screen should look something like this:
 
-![](setup-2.png)
+![](http://alfred.daniel.sh/framework/setup-2.png)
 
 Note that the organization of the files in the left pane doesn't make much of a difference, so long as you don't delete the framework.
 
