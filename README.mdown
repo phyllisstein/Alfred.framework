@@ -1,0 +1,258 @@
+% Alfred.framework
+% Daniel Shannon
+% 2013-05-25
+
+# Alfred.framework for Objective-C
+Alfred.framework is a lightweight Objective-C framework for developing workflow components for [Alfred v2][alfred]. Modeled in part on [alp][], Alfred.framework is designed to automate a number of repetitive and annoying workflow tasks with the goal of making it faster and easier to generate fewer lines of code. The library is still in its developmental infancy, but current features include:
+
+* Painless generation of feedback XML.
+* Fuzzy searching, modeled on [alp][].
+* Methods for accessing cache folders, storage folders, and the local folder.
+* Silent error logging.
+
+You can [download the latest version here][latest]; for more information about this and prior releases, [see the changelog][cl]. You can also browse and download the source code [at Github]
+
+
+## Installation
+Adding Alfred.framework to XCode is more of a chore than is ideal but less of a chore than you might fear. To get started, [download the latest version][latest] and extract the contents of the zip. Then, in XCode, click the plus sign in the lower-left-hand corner of the window, select 'Add Files to "MyAlfredWorkflow"...,' and navigate to the folder where you saved Alfred.framework. Ensure that "Copy items to the destination group's folder" and "MyAlfredWorkflow" (under "Add to targets") are checked, then select Alfred.framework and click "Add."
+
+![](setup-1.png)
+
+Now select the main project item from the pane to the left, then choose the target "MyAlfredWorkflow." Under "Build Phases," click the disclosure triangle next to "Link binary with libraries" and make sure it includes Alfred.framework. If not, click the plus sign, then "Add Other...," then navigate to the file on your hard drive and add it manually.
+
+_This next step is **very important**!_ Under "Build Settings," search for `path`. Double-click the setting "Runpath Search Paths" and click the plus sign to add a new flag. Enter `@loader_path`, then click away from the box.
+
+Now, in your main source file `main.m`, add a line lines below `#import <Foundation/Foundation.h>`:
+
+```````````objectivec
+//
+//  main.m
+//  MyAlfredWorkflow
+//
+//  Created by Daniel Shannon on 5/25/13.
+//  Copyright (c) 2013 Daniel Shannon. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import <Alfred/Alfred.h>
+
+int main(int argc, const char * argv[])
+{
+```````````````````````````````````````````````````````````````````````````````````````````````
+
+If you've done everything correctly so far, XCode should try to autocomplete `<Alfred/Alfred.h>` as you type, and your screen should look something like this:
+
+![](setup-2.png)
+
+Note that the organization of the files in the left pane doesn't make much of a difference, so long as you don't delete the framework.
+
+Now, in order to use Alfred.framework, you simply must ensure that the framework bundle is copied to the same directory as your executable.[^1] Then import `<Alfred/Alfred.h>` and you're ready to go!
+
+
+## Usage
+Currently, Alfred.framework provides the following core features:
+
+* Painless generation of feedback XML.
+* Fuzzy searching, modeled on [alp][].
+* Methods for accessing cache folders, storage folders, and the local folder.
+* Silent error logging.
+
+Each one is accessible through `<Alfred/Alfred.h>`. The two main classes currently in use are `AWWorkflow` and `AWFeedbackItem`. `AWWorkflow` is an interface to most of the methods above, whereas `AWFeedbackItem` is pretty much just what it says on the can.
+
+### Feedback XML
+To generate feedback XML in Alfred.framework, you must first create and configure one or more `AWFeedbackItem`s. There are a number of ways to do this. The first and most cumbersome involves using getter and setter methods to set up feedback items. For example, this would be perfectly valid:
+
+```````````objectivec
+#import <Alfred/Alfred.h>
+
+// [...]
+
+AWFeedbackItem *i = [[AWFeedbackItem alloc] init];
+i.title = @"Information";
+i.subtitle = @"S'more information.";
+i.valid = YES;
+i.arg = @"get info";
+```````````````````````````````````````````````````````````````````````````````````````````````
+
+...and so on. The following properties are presently used to pass data back to Alfred:
+
+```````objectivec
+@property NSString      *title;
+@property NSString      *subtitle;
+@property NSString      *uid;
+@property (nonatomic)   BOOL valid;
+@property NSString      *autocomplete;
+@property NSString      *icon;
+@property (nonatomic)   BOOL      fileicon;
+@property (nonatomic)   BOOL      filetype;
+@property NSString      *arg;
+@property NSString      *type;
+```````````````````````````````````````````````````````````````````````````````````````````````
+
+However, because setting each one would be tedious, `AWFeedbackItem` provides a class method, `+ validItem:withObjectsAndKeys:`, and an instance method, `- initAsValid:withObjects:forKeys:`, to make it simpler. As their first arguments, both take a `BOOL` that determines whether the XML item is considered actionable by Alfred. The class method then allows you to specify a `nil`-terminated list of alternative objects and keys (property names) to set up the item. All keys and objects _must_ be `NSString`s. For example:
+
+````````objectivec
+#import <Alfred/Alfred.h>
+
+// [...]
+
+AWFeedbackItem *i = [AWFeedbackItem validItem:YES withObjectsAndKeys:@"Entitlement", @"title", @"Subversion", @"subtitle", @"iconography.png", @"icon", @"argumentation", @"arg", nil];
+NSLog(@"xml=%@", [i xml]);
+```````````````````````````````````````````````````````````````````````````````````````````````
+
+...would log the following to the console:
+
+`````````xml
+AlfredWorkflowTest[31201:303] xml=<item valid="yes" arg="argumentation"><title>Entitlement</title><subtitle>Subversion</subtitle><icon>iconography.png</icon></item>
+```````````````````````````````````````````````````````````````````````````````````````````````
+
+You could do something similar with the customized constructor method. This method, rather than taking a list of `NSString` objects, takes two `NSArray` objects---one of keys, one of values---which must contain `NSString`s. Here's an example:
+
+````````objectivec
+#import <Alfred/Alfred.h>
+
+// [...]
+
+AWFeedbackItem *j = [[AWFeedbackItem alloc] initAsValid:NO withObjects:@[@"Titillation", @"Submission & Subdual", @"automation"] forKeys:@[@"title", @"subtitle", @"autocomplete"];
+NSLog(@"xml=%@", [j xml]);
+```````````````````````````````````````````````````````````````````````````````````````````````
+
+``````````````xml
+AlfredWorkflowTest[31201:303] xml=<item valid="no" autocomplete="automation"><title>Titillation</title><subtitle>Submission &amp; Subdual</subtitle><icon>icon.png</icon></item>
+```````````````````````````````````````````````````````````````````````````````````````````````
+
+Alfred.framework automatically escapes XML strings passed to `AWFeedbackItem`. Note that the feedback item's `- xml` method does not generate the complete XML string that Alfred needs to provide feedback. That functionality is provided through a method of `AWWorkflow`, and `- xml` is only used here for the purposes of demonstration.
+
+To feed data back to Alfred, you must call `AWWorkflow`'s instance method `- flush:feedbackItems:`. Like the feedback item's class method, this too takes a `nil`-terminated list of objects; in this case, however, each one should be an `AWFeedbackItem` instance. The first argument is a `BOOL`; if set to `YES`, it will flush the standard output buffer to Alfred and terminate your program. Otherwise, it will only spool the XML into the standard output. Call it like this:
+
+```````````````objectivec
+#import <Alfred/Alfred.h>
+
+// [...]
+
+AWWorkflow *wf = [[AWWorkflow alloc] init];
+
+AWFeedbackItem *i = [AWFeedbackItem validItem:YES withObjectsAndKeys:@"Entitlement", @"title", @"Subversion", @"subtitle", @"iconography.png", @"icon", @"argumentation", @"arg", nil];
+AWFeedbackItem *j = [[AWFeedbackItem alloc] initAsValid:NO withObjects:@[@"Titillation", @"Submission & Subdual", @"automation"] forKeys:@[@"title", @"subtitle", @"autocomplete"];
+
+[wf flush:YES feedbackItems:i, j, nil];
+```````````````````````````````````````````````````````````````````````````````````````````````
+
+This ends the program immediately, printing the following XML to the standard output:
+
+````````````xml
+<?xml version="1.0"?><items><item valid="yes" arg="argumentation"><title>Entitlement</title><subtitle>Subversion</subtitle><icon>iconography.png</icon></item><item valid="no" autocomplete="automation"><title>Titillation</title><subtitle>Submission &amp; Subdual</subtitle><icon>icon.png</icon></item></items>
+```````````````````````````````````````````````````````````````````````````````````````````````
+
+
+
+### Fuzzy Searching
+Alfred.framework includes a port of [alp][]'s fuzzy searching feature, which is considerably sped up in compiled code without losing any of its power. To use it, simply fill an `NSArray` with a number of objects. These objects can be of any type, so long as an `NSString` to be matched against can be extracted from them. The framework will return another `NSArray` with any matching elements, sorted by the quality of the match.
+
+The method that handles this is also declared in `AWWorkflow`, as `- fuzzySearchFor:in:withKeyBlock:`. It takes a string with the search query, an array of objects, and a block function that will be applied to each element of the array to get a search string. The block's declaration is: `(NSString *(^)(id))key`---it should take a single object, though that object can contain many other objects, and return a string to be searched.
+
+Let's take a look at some sample code, using data drawn from [alp][]'s sample case:
+
+```````{.objectivec}
+#import <Alfred/Alfred.h>
+
+// [...]
+
+AWWorkflow *wf = [[AWWorkflow alloc] init];
+
+NSArray *k = @[@"key", @"author", @"title"];
+NSArray *v0 = @[@"ZB7K535R", @"Reskin 2003", @"Including Mechanisms in Our Models of Ascriptive Inequality: 2002 Presidential Address"];
+NSArray *v1 = @[@"DBTD3HQS", @"Igor & Ronald 2008", @"Die Zunahme der Lohnungleichheit in der Bundesrepublik. Aktuelle Befunde für den Zeitraum von 1998 bis 2005"];
+NSArray *v2 = @[@"MQ3BHTBJ", @"Marx 1978", @"Alienation and Social Class"];
+NSArray *v3 = @[@"7G4BRU45", @"Marx 1978", @"The German Ideology"];
+NSArray *v4 = @[@"9ANAZXQB", @"Llorente 2006", @"Analytical Marxism and the Division of Labor"];
+NSArray *ofDicts = @[[NSDictionary dictionaryWithObjects:v0 forKeys:k],
+                     [NSDictionary dictionaryWithObjects:v1 forKeys:k],
+                     [NSDictionary dictionaryWithObjects:v2 forKeys:k],
+                     [NSDictionary dictionaryWithObjects:v3 forKeys:k],
+                     [NSDictionary dictionaryWithObjects:v4 forKeys:k]];
+
+NSArray *res = [wf fuzzySearchFor:@"marx" in:ofDicts withKeyBlock: ^(id obj) {
+    NSDictionary *d = (NSDictionary *)obj;
+    NSString *s = [NSString stringWithFormat:@"%@ - %@",
+                    [d objectForKey:@"author"],
+                    [d objectForKey:@"title"]];
+    return s;
+}];
+NSLog(@"res=%@", res);
+```````````````````````````````````````````````````````````````````````````````````````````````
+
+As you can see, it's okay that the strings we need to search are buried deep in the actual object so long as we know how to return a string from our key block; otherwise, the search function won't know what it should be applying its filters to. What's actually being searched in each case is the string `"{author} - {title}"`; what's returned, on the other hand, is the complete object that yielded each match:
+
+    AlfredWorkflowTest[32039:303] res=(
+        {
+            author = "Marx 1978";
+            key = MQ3BHTBJ;
+            title = "Alienation and Social Class";
+        },
+        {
+            author = "Marx 1978";
+            key = 7G4BRU45;
+            title = "The German Ideology";
+        },
+        {
+            author = "Llorente 2006";
+            key = 9ANAZXQB;
+            title = "Analytical Marxism and the Division of Labor";
+        }
+    )
+
+It should be considered purely coincidental that the order of the objects returned is identical to the order in which they were presented. The algorithm calculates quality of match based on the number of characters in sequence ("marx" is preferred to "moarx"---unbroken sequences are better) and the position of the sequence in the search string ("marx" is preferred to "smarx"---earlier is better).
+
+
+
+
+### Bundle Basics
+Currently, only two methods are defined to interact with the Alfred bundle, both in `AWWorkflow`. The first of these is `- log:`, which accepts a format string followed by a variable number of format arguments---just like `NSLog()` or `[NSString stringWithFormat:]`. However, rather than writing to the console, `- log:` saves text to a file called `your.bundle.id.log` in the workflow's local folder. `- bundleID`, meanwhile, returns a string with your bundle ID, as extracted from the workflow's `info.plist` file.
+
+
+
+
+### Filesystem Interaction
+The framework also defines a number of methods for quickly accessing files in the local folder, the canonical cache folder, and the canonical storage folder. These, too, are provided through the workhorse `AWWorkflow` class:
+
+* `- local`  
+    Without an argument, `[wf local]` returns the path to the folder containing your executable.
+* `- local:`  
+    With an optional `NSString` argument, `[wf local:@"baz.png"]` returns the argument appended as a path component to the folder containing your executable.
+* `- cache` and `- cache:`  
+    Returns the path to your workflow's cache folder, optionally with an additional path component appended. If the cache folder does not already exist, the framework will create it; however, the file or folder referenced by `- cache:` _will not_ be created automatically.
+* `- storage` and `- storage:`  
+    Returns the path to your workflow's storage folder, optionally with an additional path component appended. If the storage folder does not already exist, the framework will create it; however, the file or folder referenced by `- storage:` _will not_ be created.
+
+
+
+
+## Roadmap
+In the not-too-distant future, more features from [alp][]---including settings, notifications, and Keychain access---will be ported to Alfred.framework. However, I'm always open to hearing interesting feature requests. Objective-C and Cocoa provide almost limitless possibilities for what can be done with this sort of thing, and I suspect that I'm not imaginative enough to see them all. Please don't hesitate to get in touch via [the Alfred forums](http://www.alfredforum.com/user/29-phyllisstein/), [Twitter](http://twitter.com/phyllisstein), or [e-mail](d@daniel.sh).
+
+
+
+## License
+Alfred.framework is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 3.0](http://creativecommons.org/licenses/by-nc-sa/3.0/) license. This means that you may share and redistribute the package, but only for non-commercial purposes, only so long as you credit the original author---_moi_---and only if your derivative work is similarly licensed.
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>.
+
+
+
+
+## [Download][latest]
+
+
+
+
+
+[^1]: If you wanted to hide it in a subfolder, perhaps along with other frameworks, you could do that---but be sure to change "Runpath Search Paths" to reflect their correct location relative to the compiled file. (E.g., if your workflow were stored in `~/Dropbox/Settings/Alfred v2/workflows/user.workflow.foo/` and your executable lived at `.../user.workflow.foo/MyAlfredWorkflow`, you could place your bundles under `.../user.workflow.foo/Frameworks` and change "Runpath Search Paths" to `@loader_path/Frameworks`.)
+
+
+
+
+[alfred]: http://alfredapp.com
+[alp]: https://github.com/phyllisstein/alp
+[latest]: http://alfred.daniel.sh/framework/Alfred-latest.zip
+[cl]: http://alfred.daniel.sh/framework/changelog.html
