@@ -24,6 +24,11 @@
 # pragma mark -
 # pragma mark Internal methods
 
++ (id)workflow
+{
+    return [[AWWorkflow alloc] init];
+}
+
 - (id)init
 {
     self = [super init];

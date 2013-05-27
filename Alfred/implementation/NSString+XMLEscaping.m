@@ -16,9 +16,13 @@
     NSRange whole = NSMakeRange(0, [self length]);
 
     [esc replaceOccurrencesOfString:@"&" withString:@"&amp;" options:NSLiteralSearch range:whole];
+    whole = NSMakeRange(0, [esc length]);
     [esc replaceOccurrencesOfString:@"\"" withString:@"&quot;" options:NSLiteralSearch range:whole];
+    whole = NSMakeRange(0, [esc length]);
     [esc replaceOccurrencesOfString:@"'" withString:@"&apos;" options:NSLiteralSearch range:whole];
+    whole = NSMakeRange(0, [esc length]);
     [esc replaceOccurrencesOfString:@"<" withString:@"&lt;" options:NSLiteralSearch range:whole];
+    whole = NSMakeRange(0, [esc length]);
     [esc replaceOccurrencesOfString:@">" withString:@"&gt;" options:NSLiteralSearch range:whole];
 
     return esc;

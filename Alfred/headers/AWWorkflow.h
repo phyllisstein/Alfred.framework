@@ -10,7 +10,17 @@
 
 @interface AWWorkflow : NSObject
 
-@property (readonly) NSString *bid;
+# pragma mark -
+# pragma mark Class methods
+
++ (id)workflow;
+
+
+
+
+
+#pragma mark -
+#pragma mark Instance methods
 
 - (NSString *)bundleID;
 - (NSString *)local;
@@ -28,5 +38,16 @@
 - (NSArray *)fuzzySearchFor:(NSString *)query in:(NSArray *)array withKeyBlock:(NSString *(^)(id))key;
 
 - (NSDictionary *)parseArguments:(const char *[])argv withKeys:(NSArray *)keys count:(int)argc;
+
+
+
+
+
+
+
+#pragma mark -
+#pragma mark Properties
+
+@property (readonly) NSString *bid;
 
 @end

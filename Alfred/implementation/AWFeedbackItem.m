@@ -53,8 +53,8 @@
         _autocomplete = nil;
         _arg = nil;
 
-        _fileicon = @NO;
-        _filetype = @NO;
+        _fileicon = nil;
+        _filetype = nil;
         _type = nil;
 
         self->tags_ = [NSArray arrayWithObjects:@"title", @"subtitle", @"icon", nil];
@@ -114,11 +114,26 @@
                 for (NSString *a in attr) {
                     NSString *av;
                     if ([a isEqualToString:@"valid"])
-                        av = [self.valid boolValue] ? @"yes" : @"no";
+                    {
+                        if (self.valid != nil)
+                        {
+                            av = [self.valid boolValue] ? @"yes" : @"no";
+                        }
+                    }
                     else if ([a isEqualToString:@"fileicon"])
-                        av = [self.fileicon boolValue] ? @"yes" : @"no";
+                    {
+                        if (self.fileicon != nil)
+                        {
+                            av = [self.fileicon boolValue] ? @"yes" : @"no";
+                        }
+                    }
                     else if ([a isEqualToString:@"filetype"])
-                        av = [self.filetype boolValue] ? @"yes" : @"no";
+                    {
+                        if (self.filetype != nil)
+                        {
+                            av = [self.filetype boolValue] ? @"yes" : @"no";
+                        }
+                    }
                     else if ([self valueForKey:a] != nil)
                         av = [self valueForKey:a];
 

@@ -14,6 +14,11 @@
     NSDictionary *attrib_;
 }
 
++ (id)itemWithObjectsAndKeys:(id)o, ... NS_REQUIRES_NIL_TERMINATION;
+- (id)initWithObjects:(NSArray *)obj forKeys:(NSArray *)key;
+
+- (NSString *)xml;
+
 
 @property NSString      *title;
 @property NSString      *subtitle;
@@ -25,10 +30,5 @@
 @property NSNumber      *filetype;
 @property NSString      *arg;
 @property NSString      *type;
-
-+ (id)itemWithObjectsAndKeys:(id)o, ... NS_REQUIRES_NIL_TERMINATION;
-- (id)initWithObjects:(NSArray *)obj forKeys:(NSArray *)key;
-
-- (NSString *)xml;
 
 @end

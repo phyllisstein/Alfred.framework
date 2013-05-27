@@ -92,7 +92,7 @@
         }
     }
 
-    int _i = 1;
+    int _i = -1;
     for (int i = 1; i < self.argc; i++) {
         NSString *arg = [NSString stringWithCString:self.argv[i] encoding:NSUTF8StringEncoding];
         if ([arg rangeOfString:@"--"].location == NSNotFound) {
@@ -100,13 +100,21 @@
             break;
         }
     }
-    NSMutableString *q = [[NSMutableString alloc] initWithCapacity:0];
-    for (int j = _i; j < self.argc; j++) {
-        NSString *s = [NSString stringWithCString:self.argv[j] encoding:NSUTF8StringEncoding];
-        [q appendFormat:@"%@ ", s];
+
+    if (_i == -1)
+    {
+        [d setObject:@NO forKey:@"{query}"];
     }
-    q = [NSMutableString stringWithString:[q stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
-    [d setObject:q forKey:@"{query}"];
+    else
+    {
+        NSMutableString *q = [[NSMutableString alloc] initWithCapacity:0];
+        for (int j = _i; j < self.argc; j++) {
+            NSString *s = [NSString stringWithCString:self.argv[j] encoding:NSUTF8StringEncoding];
+            [q appendFormat:@"%@ ", s];
+        }
+        q = [NSMutableString stringWithString:[q stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
+        [d setObject:q forKey:@"{query}"];
+    }
 
     return d;
 }
