@@ -66,7 +66,7 @@ To generate feedback XML in Alfred.framework, you must first create and configur
 AWFeedbackItem *i = [[AWFeedbackItem alloc] init];
 i.title = @"Information";
 i.subtitle = @"S'more information.";
-i.valid = YES;
+i.valid = @YES;
 i.arg = @"get info";
 ```````````````````````````````````````````````````````````````````````````````````````````````
 
