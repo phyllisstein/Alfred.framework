@@ -128,8 +128,8 @@ To feed data back to Alfred, you must call `AWWorkflow`'s instance method `- flu
 
 AWWorkflow *wf = [[AWWorkflow alloc] init];
 
-AWFeedbackItem *i = [AWFeedbackItem validItem:YES withObjectsAndKeys:@"Entitlement", @"title", @"Subversion", @"subtitle", @"iconography.png", @"icon", @"argumentation", @"arg", nil];
-AWFeedbackItem *j = [[AWFeedbackItem alloc] initAsValid:NO withObjects:@[@"Titillation", @"Submission & Subdual", @"automation"] forKeys:@[@"title", @"subtitle", @"autocomplete"];
+AWFeedbackItem *i = [AWFeedbackItem itemWithObjectsAndKeys:@"Entitlement", @"title", @"Subversion", @"subtitle", @"iconography.png", @"icon", @"argumentation", @"arg", @YES, @"valid", nil];
+AWFeedbackItem *j = [[AWFeedbackItem alloc] initWithObjects:@[@"Titillation", @"Submission & Subdual", @"automation", @YES] forKeys:@[@"title", @"subtitle", @"autocomplete", @"valid"];
 
 [wf flush:YES feedbackItems:i, j, nil];
 ```````````````````````````````````````````````````````````````````````````````````````````````
@@ -147,14 +147,15 @@ If you're generating feedback items on-the-fly, of course, you'll want to be abl
 
 // [...]
 
-AWWorkflow *wf = [[AWWorkflow alloc] init];
-NSMutableArray *fbi = [[NSMutableArray alloc] initWithCapacity:0];
+AWWorkflow *wf = [AWWorkflow workflow];     // Returns an initialized AWWorkflow
+NSMutableArray *fbi = [NSMutableArray new];
 
-if (myCondition == YES) {
-    AWFeedbackItem *i = [AWFeedbackItem validItem:YES withObjectsAndKeys:@"Entitlement", @"title", @"Subversion", @"subtitle", @"iconography.png", @"icon", @"argumentation", @"arg", nil];
+if (myCondition == YES)
+{
+    AWFeedbackItem *i = [AWFeedbackItem itemWithObjectsAndKeys:@"Entitlement", @"title", @"Subversion", @"subtitle", @"iconography.png", @"icon", @"argumentation", @"arg", @YES, @"valid", nil];
     [fbi addObject:i];
 }
-AWFeedbackItem *j = [[AWFeedbackItem alloc] initAsValid:NO withObjects:@[@"Titillation", @"Submission & Subdual", @"automation"] forKeys:@[@"title", @"subtitle", @"autocomplete"];
+AWFeedbackItem *j = [[AWFeedbackItem alloc] initWithObjects:@[@"Titillation", @"Submission & Subdual", @"automation", @YES] forKeys:@[@"title", @"subtitle", @"autocomplete", @"valid"];
 [fbi addObject:j];
 
 [wf flush:YES feedbackArray:fbi];
@@ -174,7 +175,7 @@ Let's take a look at some sample code, using data drawn from [alp][]'s sample ca
 
 // [...]
 
-AWWorkflow *wf = [[AWWorkflow alloc] init];
+AWWorkflow *wf = [AWWorkflow workflow];
 
 NSArray *k = @[@"key", @"author", @"title"];
 NSArray *v0 = @[@"ZB7K535R", @"Reskin 2003", @"Including Mechanisms in Our Models of Ascriptive Inequality: 2002 Presidential Address"];
@@ -232,7 +233,7 @@ The `AWWorkflow` object provides a method for converting arguments to the workfl
 int main(int argc, const char *argv[])
 {
     @autoreleasepool {
-        AWWorkflow *wf = [[AWWorkflow alloc] init];
+        AWWorkflow *wf = [AWWorkflow workflow];
         NSArray *k = @[@{@"name": @"qux", @"has_arg": @YES, @"flag": @"q"},
                        @{@"name": @"baz", @"has_arg": @NO,  @"flag": @"b"},
                        @{@"name": @"cog", @"has_arg": @2,   @"flag": @"c"}];
@@ -298,7 +299,7 @@ In the not-too-distant future, more features from [alp][]---including settings, 
 ## License
 Alfred.framework is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 3.0](http://creativecommons.org/licenses/by-nc-sa/3.0/) license. This means that you may share and redistribute the package, but only for non-commercial purposes, only so long as you credit the original author---_moi_---and only if your derivative work is similarly licensed.
 
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>.
+<center><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>.</center>
 
 
 
