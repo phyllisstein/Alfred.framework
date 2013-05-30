@@ -117,7 +117,23 @@ NSLog(@"xml=%@", [j xml]);
 AlfredWorkflowTest[31201:303] xml=<item valid="no" autocomplete="automation"><title>Titillation</title><subtitle>Submission &amp; Subdual</subtitle><icon>icon.png</icon></item>
 ```````````````````````````````````````````````````````````````````````````````````````````````
 
-Alfred.framework automatically escapes XML strings passed to `AWFeedbackItem`. Note that the feedback item's `- xml` method does not generate the complete XML string that Alfred needs to provide feedback. That functionality is provided through a method of `AWWorkflow`, and `- xml` is only used here for the purposes of demonstration.
+Alfred.framework automatically escapes XML strings passed to `AWFeedbackItem`. Additionally, the way that arguments are treated will vary depending on their content. From Alfred v2.0.4 on, arguments can be specified as either attributes of `<item></item>` _or_ separate XML keys. The framework supports this feature by designating any `arg` string containing newlines a tag, and any `arg` string without newlines an attribute. For example:
+
+``````````objectivec
+AWFeedbackItem *i = [AWFeedbackItem itemWithObjectsAndKeys:@NO, @"valid", @"Old and Busted", @"title", @"I'm a simple man", @"arg", nil];
+AWFeedbackItem *j = [AWFeedbackItem itemWithObjectsAndKeys:@YES, @"valid", @"New Hotness", @"title", @"I\nthink\ncomplexly", @"arg", nil];
+
+AWWorkflow *wf = [[AWWorkflow alloc] init];
+[wf flush:YES feedbackItems:i, j, nil];
+````````````````````````````````````````````````````````````````````````````````````````````````
+
+`````````xml
+<?xml version="1.0"?><items><item valid="no" arg="I&apos;m a simple man"><title>Old and Busted</title><subtitle></subtitle><icon>icon.png</icon></item><item valid="yes"><title>New Hotness</title><subtitle></subtitle><icon>icon.png</icon><arg>I
+think
+complexly</arg></item></items>
+````````````````````````````````````````````````````````````````````````````````````````````````
+
+Note that the feedback item's `- xml` method does not generate the complete XML string that Alfred needs to provide feedback. That functionality is provided through a method of `AWWorkflow`, and `- xml` is only used here for the purposes of demonstration.
 
 To feed data back to Alfred, you must call `AWWorkflow`'s instance method `- flush:(BOOL) feedbackItems:(AWFeedbackItem *)...`. Like the feedback item's class method, this too takes a `nil`-terminated list of objects; in this case, however, each one should be an `AWFeedbackItem` instance. The first argument is a `BOOL`; if set to `YES`, it will flush the standard output buffer to Alfred and terminate your program. Otherwise, it will only spool the XML into the standard output. Call it like this:
 

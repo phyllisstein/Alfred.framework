@@ -58,7 +58,7 @@
         _type = nil;
 
         self->tags_ = [NSArray arrayWithObjects:@"title", @"subtitle", @"icon", nil];
-        self->attrib_ = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObjects:@"uid", @"valid", @"autocomplete", @"arg", @"type", nil], @"item", [NSArray arrayWithObjects:@"fileicon", @"filetype", nil], @"icon", nil];
+        self->attrib_ = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObjects:@"uid", @"valid", @"autocomplete", @"type", nil], @"item", [NSArray arrayWithObjects:@"fileicon", @"filetype", nil], @"icon", nil];
     }
     
     return self;
@@ -97,6 +97,10 @@
                 v = [v boolValue] ? @"yes" : @"no";
             i = [i stringByAppendingFormat:@" %@=\"%@\"", k, v];
         }
+    }
+    if (self.arg != nil && [self.arg rangeOfString:@"\n"].location == NSNotFound)
+    {
+        i = [i stringByAppendingFormat:@" arg=\"%@\"", [self.arg escapedString]];
     }
     i = [i stringByAppendingString:@">"];
     x = [x stringByAppendingString:i];
@@ -144,6 +148,10 @@
             [format appendString:@">"];
             x = [x stringByAppendingFormat:@"%@%@</%@>", format, strV, k];
         }
+    }
+    if (self.arg != nil && [self.arg rangeOfString:@"\n"].location != NSNotFound)
+    {
+        x = [x stringByAppendingFormat:@"<arg>%@</arg>", [self.arg escapedString]];
     }
 
     x = [x stringByAppendingString:@"</item>"];
