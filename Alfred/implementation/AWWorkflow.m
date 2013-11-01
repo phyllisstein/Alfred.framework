@@ -109,7 +109,7 @@
     NSString *c = [[NSFileManager defaultManager] cacheDirectory];
     NSString *bid = [self bundleID];
     if (c != nil) {
-        c = [[[c stringByAppendingPathComponent:@"com.runningwithcrayons.Alfred-2"] stringByAppendingPathComponent:@"Workfow Data"]
+        c = [[[c stringByAppendingPathComponent:@"com.runningwithcrayons.Alfred-2"] stringByAppendingPathComponent:@"Workflow Data"]
              stringByAppendingPathComponent:bid];
 
     }
