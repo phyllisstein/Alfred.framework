@@ -47,6 +47,12 @@
         _title = @"";
         _subtitle = @"";
         _icon = @"icon.png";
+		// additional properties to support modifier subtitles
+		_subShift = @"";
+		_subFn = @"";
+		_subCtrl = @"";
+		_subAlt = @"";
+		_subCmd = @"";
 
         _uid = nil;
         _valid = @NO;
@@ -153,6 +159,18 @@
     {
         x = [x stringByAppendingFormat:@"<arg>%@</arg>", [self.arg escapedString]];
     }
+
+	// additional properties to support modifier subtitles
+	if (![_subShift isEqualToString:@""])
+        x = [x stringByAppendingFormat:@"<subtitle mod=\"shift\">%@</subtitle>", _subShift];
+	if (![_subFn isEqualToString:@""])
+        x = [x stringByAppendingFormat:@"<subtitle mod=\"fn\">%@</subtitle>", _subFn];
+	if (![_subCtrl isEqualToString:@""])
+        x = [x stringByAppendingFormat:@"<subtitle mod=\"ctrl\">%@</subtitle>", _subCtrl];
+	if (![_subAlt isEqualToString:@""])
+        x = [x stringByAppendingFormat:@"<subtitle mod=\"alt\">%@</subtitle>", _subAlt];
+	if (![_subCmd isEqualToString:@""])
+        x = [x stringByAppendingFormat:@"<subtitle mod=\"cmd\">%@</subtitle>", _subCmd];
 
     x = [x stringByAppendingString:@"</item>"];
 
